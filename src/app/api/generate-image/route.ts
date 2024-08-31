@@ -7,7 +7,7 @@ import fs from 'fs'
 
 const url = 'https://api.aimlapi.com/images/generate'
 const headers = {
-  Authorization: 'ad18ecb123134dc38d0ce8464db29013',
+  Authorization: process.env.AIML_API_PRIVATE_KEY,
   'Content-Type': 'application/json',
 }
 const payload = {
