@@ -1,8 +1,10 @@
+import clsx from 'clsx'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
-import clsx from 'clsx'
 
+import './globals.css'
+
+import ClientProviders from './ClientProviders'
 export const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -22,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en' className={clsx('antialiased scroll-smooth', inter.variable)}>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ClientProviders>{children}</ClientProviders>
+      </body>
     </html>
   )
 }

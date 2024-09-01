@@ -1,10 +1,16 @@
 'use client'
+import { useMutation } from '@tanstack/react-query'
 
-import { Header } from 'src/components/Header'
 import { Button } from 'src/components/Button'
+import { Header } from 'src/components/Header'
 
+import { postGenerateImage } from './services'
 export default function Home() {
-  const onClickGenerate = () => {}
+  const { mutate: mutateGenerateImage } = useMutation({
+    mutationFn: postGenerateImage,
+  })
+
+  const onClickGenerate = () => mutateGenerateImage()
 
   return (
     <main className='flex-auto'>
