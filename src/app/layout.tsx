@@ -2,10 +2,11 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import ClientProviders from './ClientProviders'
+
 import './globals.css'
 
-import ClientProviders from './ClientProviders'
-export const inter = Inter({
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
