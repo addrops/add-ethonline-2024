@@ -13,10 +13,10 @@ const headers = {
   'Content-Type': 'application/json',
 }
 const payload = {
-  prompt: 'A man surfing',
+  prompt: 'An unrealistic photo of a cat',
   model: 'flux/schnell',
-  width: 512,
-  height: 512,
+  width: 1080,
+  height: 1080,
   seed: 37,
   steps: 25,
   reference: null,
@@ -30,10 +30,15 @@ export async function POST(req: NextRequest) {
     const imageUrl = response.data.images[0].url
     const imageResponse = await axios.get(imageUrl, { responseType: 'arraybuffer' })
 
-    fs.writeFileSync('output.png', Buffer.from(imageResponse.data), 'binary')
-    return NextResponse.json({ data: 'Image generated' }, { status: 200 })
-  } catch (error) {
-    console.error(error)
+    const base64Image = Buffer.from(imageResponse.data, 'binary').toString('base64')
+    const mimeType = imageResponse.headers['content-type']
+    return NextResponse.json({ data: `data:${mimeType};base64,${base64Image}` }, { status: 200 })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    if (error.status == 429) {
+      return NextResponse.json({ error: 'Rate limit exceeded' }, { status: 429 })
+    }
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 400 })
   }
 }
